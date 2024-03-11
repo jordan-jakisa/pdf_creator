@@ -114,11 +114,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .padding(paddingValues)
                             .fillMaxSize()
+                            .verticalScroll(scrollState)
                     ) {
                         Column(
                             modifier = Modifier
                                 .padding(16.dp)
-                                .verticalScroll(scrollState)
+
                         ) {
                             Spacer(modifier = Modifier.height(32.dp))
                             Text(

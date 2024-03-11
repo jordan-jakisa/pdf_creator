@@ -45,3 +45,7 @@ fun Long.getTimeAgo(): String {
         }
     }
 }
+
+fun Long.formatDate(): String{
+    return SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(this)
+}

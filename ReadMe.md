@@ -9,5 +9,11 @@ The SDK provides a viewfinder and preview screens and they provide the following
 
 You can retrieve both PDFs and JPEG files for your scanned documents
 
+### Technology used
+- MLKit
+- Jetpack Compose
+- Room
+- Hilt
+
 ### Requirements
 - Minimum device RAM of 1.7GB

@@ -2,8 +2,14 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+
     kotlin("kapt")
+    id ("kotlin-android")
     id("com.google.dagger.hilt.android")
+
+
 }
 
 android {
@@ -48,6 +54,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/*.kotlin_module"
         }
     }
 }
@@ -74,11 +81,19 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.material.icons.extended)
 
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
+    val hiltVersion = "2.51"
+    //noinspection UseTomlInstead
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    //noinspection UseTomlInstead
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    val roomVersion = "2.6.1"
+    //noinspection UseTomlInstead
+    implementation ("androidx.room:room-ktx:$roomVersion")
+    //noinspection UseTomlInstead,KaptUsageInsteadOfKsp
+    kapt("androidx.room:room-compiler:$roomVersion")
+    //noinspection UseTomlInstead
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 }
 
 // Allow references to generated code

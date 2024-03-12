@@ -5,7 +5,7 @@ The download size is approximately 300KB
 The SDK provides a viewfinder and preview screens and they provide the following customization controls.
 - Importing from the gallery
 - Setting a limit to the number of pages scanned
-- scanner mode (controls the feature sets in the flow)
+- Scanner mode (controls the feature sets in the flow)
 
 You can retrieve both PDFs and JPEG files for your scanned documents
 
@@ -16,4 +16,5 @@ You can retrieve both PDFs and JPEG files for your scanned documents
 - Hilt
 
 ### Requirements
+- Android 5.0 devices and above
 - Minimum device RAM of 1.7GB

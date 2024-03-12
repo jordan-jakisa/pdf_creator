@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +51,7 @@ import com.keru.pdfcreator.data.Document
 import com.keru.pdfcreator.ui.components.CompletedDialog
 import com.keru.pdfcreator.ui.components.CreateNewPdfCard
 import com.keru.pdfcreator.ui.components.DocumentCard
+import com.keru.pdfcreator.ui.components.EmptyListComponent
 import com.keru.pdfcreator.ui.components.FeatureCard
 import com.keru.pdfcreator.ui.theme.PDFCreatorTheme
 import com.keru.pdfcreator.utils.formatDate
@@ -70,39 +73,19 @@ class MainActivity : ComponentActivity() {
         val scannerLauncher =
             registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
-                    val scanResult = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
-                    scanResult?.pages?.let { pages ->
-                        for (page in pages) {
-                            imageUri = pages[0].imageUri
-                        }
-                    }
-
-                    scanResult?.pdf?.let { pdf ->
-                        pdfUri = pdf.uri
-                        pageCount = pdf.pageCount
-
-                        val document = Document(
-                            name = "Document ${
-                                System.currentTimeMillis().formatDate().replace(" ", "_")
-                            }_${System.currentTimeMillis().toString().takeLast(4)}",
-                            fileUri = pdfUri.toString(),
-                            pageCount = pageCount,
-                            createdAt = System.currentTimeMillis()
-                        )
-                        vm.insertDocument(document)
-                    }
-
+                    handleResult(result)
                 }
             }
 
         setContent {
             PDFCreatorTheme {
                 //document scanner options
-                val options = GmsDocumentScannerOptions.Builder().setGalleryImportAllowed(true)
-                    .setPageLimit(100).setResultFormats(RESULT_FORMAT_PDF, RESULT_FORMAT_JPEG)
-                    .setScannerMode(
-                        SCANNER_MODE_FULL
-                    ).build()
+                val options = GmsDocumentScannerOptions.Builder()
+                    .setGalleryImportAllowed(true)
+                    .setPageLimit(100)
+                    .setResultFormats(RESULT_FORMAT_PDF, RESULT_FORMAT_JPEG)
+                    .setScannerMode(SCANNER_MODE_FULL)
+                    .build()
 
                 val scanner = GmsDocumentScanning.getClient(options)
                 val uiState = vm.uiState
@@ -119,7 +102,6 @@ class MainActivity : ComponentActivity() {
                         Column(
                             modifier = Modifier
                                 .padding(16.dp)
-
                         ) {
                             Spacer(modifier = Modifier.height(32.dp))
                             Text(
@@ -186,6 +168,14 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             }
+
+                            AnimatedVisibility(
+                                visible = uiState.documents.isEmpty(),
+                                enter = slideInHorizontally { it },
+                                exit = slideOutVertically { it }
+                            ) {
+                                EmptyListComponent()
+                            }
                         }
                     }
 
@@ -214,6 +204,25 @@ class MainActivity : ComponentActivity() {
                 }
 
             }
+        }
+    }
+
+    private fun handleResult(result: ActivityResult) {
+        val currentTime = System.currentTimeMillis()
+        val scanResult = GmsDocumentScanningResult.fromActivityResultIntent(result.data)
+        scanResult?.pdf?.let { pdf ->
+            pdfUri = pdf.uri
+            pageCount = pdf.pageCount
+
+            val document = Document(
+                name = "Document ${
+                    currentTime.formatDate().replace(" ", "_").replace(",", "_")
+                }_${currentTime.toString().takeLast(4)}",
+                fileUri = pdfUri.toString(),
+                pageCount = pageCount,
+                createdAt = currentTime
+            )
+            vm.insertDocument(document)
         }
     }
 }

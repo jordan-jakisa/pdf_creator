@@ -1,20 +1,33 @@
 ### Working
-The ML models, scanning logic and UI flows are dynamically downloaded by Google Play Services and are not part of the APK.
-The download size is approximately 300KB
 
-The SDK provides a viewfinder and preview screens and they provide the following customization controls.
-- Importing from the gallery
-- Setting a limit to the number of pages scanned
-- Scanner mode (controls the feature sets in the flow)
+The ML models, scanning logic and UI flows are dynamically downloaded by Google Play Services and are not part of the APK. The download size is approximately 300KB. The SDK provides a viewfinder and preview screens.
 
-You can retrieve both PDFs and JPEG files for your scanned documents
+### Features
+
+- Import images from the gallery
+
+- Scan document with the help of AI
+
+- Apply filters to the scanned pages to enhance the quality
+
+- Retake badly scanned pages
+
+- Crop and rotate scanned pages to perfection
+
+- Delete badly taken pages
 
 ### Technology used
+
 - MLKit
+
 - Jetpack Compose
+
 - Room
+
 - Hilt
 
-### Requirements
+### App requirements
+
 - Android 5.0 devices and above
+
 - Minimum device RAM of 1.7GB

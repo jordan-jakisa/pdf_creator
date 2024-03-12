@@ -36,3 +36,6 @@ The ML models, scanning logic and UI flows are dynamically downloaded by Google 
 - Android 5.0 devices and above
 
 - Minimum device RAM of 1.7GB
+
+# License
+Feel free to clone and use this source code as you may!

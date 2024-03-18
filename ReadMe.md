@@ -3,7 +3,12 @@ An easy to use and minimal AI powered document scanner app that can convert any 
 
 ![Frame 1(3)](https://github.com/jordan-jakisa/pdf_creator/assets/72340216/e810669e-dbbe-4c34-9332-d6ca090d0986)
 
-### Working
+### How to get the app
+Get the app on the Google PlayStore by following this link: [PDF Document Scanner](https://play.google.com/store/apps/details?id=com.keru.pdfcreator)
+
+
+## How it works
+https://github.com/jordan-jakisa/pdf_creator/assets/72340216/9f4338b2-14ee-484c-b814-41dc0d6004c5
 
 The ML models, scanning logic and UI flows are dynamically downloaded by Google Play Services and are not part of the APK. The download size is approximately 300KB. The SDK provides a viewfinder and preview screens.
 
